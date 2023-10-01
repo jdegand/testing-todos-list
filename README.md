@@ -39,6 +39,7 @@ You can also do it with cypress.
 - ticket store tests
 - change tests that depend on using testid
 - Angular Material error
+- Route tests -> only possible with TestBed and location ? 
 
 ## How to Use
 
@@ -71,7 +72,7 @@ npm run test:coverage
 - [Stack Overflow](https://stackoverflow.com/questions/70096180/how-to-associate-mat-label-and-mat-select-when-mat-label-is-outside-of-mat-form) - mat label and mat select
 - [Stack Overflow](https://stackoverflow.com/questions/60573172/angular-material-mat-option-not-visible-in-tests) - angular material mat option not visible in tests
 - [Clarity Dev](https://claritydev.net/blog/testing-select-components-react-testing-library) - testing select components react testing library
-- [Stack Overflow](https://stackoverflow.com/questions/56450141/creating-mat-option-elements-with-ngfor-when-list-initialized-empty) 
+- [Stack Overflow](https://stackoverflow.com/questions/56450141/creating-mat-option-elements-with-ngfor-when-list-initialized-empty) - creating mat option elements with ngFor when list initialized as empty
 - [Github](https://github.com/angular/components/issues/27241) - feat(material/form-field): add MatLabel input property to change use of html label
 - [Stack Overflow](https://stackoverflow.com/questions/76377013/react-testing-library-select-dropdown-option-isnt-selecting-anything) - react testing library select dropdown option isnt selecting anything
 - [Stack Overflow](https://stackoverflow.com/questions/41939511/how-can-i-get-the-arguments-called-in-jest-mock-function) - how can i get the arguments call in jest mock function
