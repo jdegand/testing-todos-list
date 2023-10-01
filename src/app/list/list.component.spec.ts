@@ -193,8 +193,6 @@ describe('ListComponent', () => {
 
                 const button = screen.getAllByTestId("doneBtn")[0];
 
-                screen.debug(button)
-
                 await user.click(button);
 
                 expect(screen.getAllByTestId("doneDiv")[0].textContent).toContain("true");

@@ -101,3 +101,4 @@ npm run test:coverage
 - [Medium](https://vugar-005.medium.com/angular-unit-testing-without-testbed-ed7832df8ad9) - angular unit testing without testbed
 - [Dev.to](https://dev.to/this-is-angular/testing-angular-routing-components-with-the-routertestingmodule-4cj0) - testing angular routing components with the router testing module
 - [Stack Overflow](https://stackoverflow.com/questions/39791773/how-can-i-unit-test-a-component-that-uses-the-router-in-angular) - how can I unit test a component that uses the router in angular
+- [Stack Overflow](https://stackoverflow.com/questions/67718077/difference-between-testbed-injectservicename-and-fixture-debugelement-injector) - difference between testbed inject and fixtue debug element injector
