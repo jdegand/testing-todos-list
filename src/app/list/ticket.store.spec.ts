@@ -6,6 +6,7 @@ import { BackendService } from "../backend.service";
 import { ListComponent } from "./list.component";
 import { TicketStore } from "./ticket.store";
 import { provideComponentStore } from "@ngrx/component-store";
+import { TestBed } from "@angular/core/testing";
 
 const USERS = [
   { id: 1, name: 'titi' },
@@ -27,18 +28,17 @@ const TICKETS = [
 ];
 
 // TicketStore coverage is already good from list tests
-// backend service needs tests - will tests improve that code coverage?
+// backend service needs tests - will these tests improve code coverage? No.
+// Added Thomas' tests and only line 50 of Ticket Store gets covered from all these tests
+// Wasted work?
 describe('TicketStore', () => {
 
   describe('When init', () => {
-    it('Then calls backend.users', async () => {
+    it('Then calls backend.users and backend.tickets', async () => {
       const {mockBackendService} = await setup();
 
       expect(mockBackendService.users).toHaveBeenCalled();
-    });
-
-    it('Then calls backend.tickets', async () => {
-      //
+      expect(mockBackendService.tickets).toHaveBeenCalled();
     });
 
     describe('Given all api returns success response', () => {
@@ -82,8 +82,11 @@ const setup = async () => {
 
   // have to add provideComponentStore because lifecycle methods are used in ticket store 
   // would prefer to have ticket.store use constructor and not deal with injectors 
+  // const store = new Store(mockBackendService);
 
-  const store = new TicketStore(mockBackendService);
+  // I didn't want to use TestBed but this seems easier
+
+  const store = TestBed.inject(TicketStore);
 
   return { fixture, store, mockBackendService };
 };
