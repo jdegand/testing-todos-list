@@ -20,26 +20,43 @@ You can also do it with cypress.
 
 ## Screenshots
 
+
+### Inital Code Coverage
 ![](screenshots/testing-todos-list-initial-results.png "Initial Code Coverage")
+
+***
+
+### Thomas Laforge Solution's Code Coverage
+
+![](screenshots/tomalaforge-testing-todos-list-coverage.png "Tomalaforge's Code Coverage")
+
+***
+
+### This Repo's Code Coverage
+
+![](screenshots/jdegand-testing-todos-list-coverage.png "jdegand's code coverage")
+
+***
 
 ## Thoughts
 
 - I actually think testing this application would be easier with karma and jasmine.  There are more code examples to compare and contrast.  
 - There is a distinct lack of documentation of testing NgRx component stores.  With Jest and Testing Library added, the odds of finding anything great to follow is slim to none.  
 - The examples I did find are not current with the lastest practices.   
-- I referenced [Tim Deschryver's blog](https://timdeschryver.dev/blog/testing-an-ngrx-project#unit-tests) often to test this app.  This article is a *must* read for testing NgRx.  It is pretty much the only great resource out there that will help someone complete this challenge.  
+- I referenced Tim Deschryver's blog often to test this app.  This [article](https://timdeschryver.dev/blog/testing-an-ngrx-project#unit-tests) is a *must* read for testing NgRx.  It is pretty much the only great resource out there that will help someone complete this challenge.  
 - I ran test coverage first and then ran the app.  I stopped the app but left it in the browser and then started to work on writing tests.  I referred back to the app often.  
-- `Done` can only be updated once. However, you can change the assignee after the todo is already done.  
+- `Done` can only be updated once. However, you can change the assignee after the todo is already done.  Unintended bug?
 - To test the row component, you need to look up Input/Output testing.  Check out the Input / Output Angular challenge. 
 - I replicated Input / Output testing for the add component as well.   
 - "Incorrect use of <label for=FORM_ELEMENT>" error with the assign select input.  This seems to be a recurring problem with Angular Material. I have to investigate further to see what the issue is.  The error doesn't seem to really affect the performance of the app. I ignored it.
+- I need to look into the differences between using router and location in testing.  Mocking Router seems to be a slower solution that just using location and location.path().
+- Once you start adding testids, it is tempting to keep adding more.  Testids really do speed up the testing process. 
 
 ## Continued Development
 
 - ticket store tests
 - change tests that depend on using testid
 - Angular Material error
-- Route tests -> only possible with TestBed and location ? 
 
 ## How to Use
 
@@ -102,3 +119,9 @@ npm run test:coverage
 - [Dev.to](https://dev.to/this-is-angular/testing-angular-routing-components-with-the-routertestingmodule-4cj0) - testing angular routing components with the router testing module
 - [Stack Overflow](https://stackoverflow.com/questions/39791773/how-can-i-unit-test-a-component-that-uses-the-router-in-angular) - how can I unit test a component that uses the router in angular
 - [Stack Overflow](https://stackoverflow.com/questions/67718077/difference-between-testbed-injectservicename-and-fixture-debugelement-injector) - difference between testbed inject and fixtue debug element injector
+- [Stack Overflow](https://stackoverflow.com/questions/58081360/anchor-href-vs-angular-routerlink) - href vs routerLink
+- [YouTube](https://www.youtube.com/watch?v=FJvk9YyXTLo) - Services | HttpClient | Observables | JEST Unit Testing tutorial for Angular part 4 | Techopsworld
+- [Stack Overflow](https://stackoverflow.com/questions/39577920/angular-2-unit-testing-components-with-routerlink) - angular 2 unit testing components with routerlink
+- [Blog](https://blog.angular.io/write-better-tests-without-router-mocks-stubs-bf5fc95c1c57) - write better tests without router mocks stubs
+- [Dev.to](https://dev.to/this-is-angular/testing-angular-routing-components-with-the-routertestingmodule-4cj0) - testing angular components with the routerTestingModule
+- [Dev.to](https://dev.to/tipsy_dev/testing-library-writing-better-async-tests-c67) - testing library writing better async tests

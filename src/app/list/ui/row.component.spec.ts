@@ -2,7 +2,8 @@ import { render, screen } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
 import { RowComponent } from './row.component';
 import { APP_ROUTES } from '../../app.route';
-import { Router } from '@angular/router';
+import { TestBed } from '@angular/core/testing';
+import { Location } from '@angular/common';
 
 const USERS = [
     { id: 1, name: 'titi' },
@@ -21,8 +22,6 @@ const TICKET_ASSIGNED = {
     assignee: 'titi',
     completed: false,
 };
-
-//let router: Router;
 
 describe('RowComponent', () => {
     describe('Given an unassigned ticket', () => {
@@ -184,5 +183,42 @@ describe('RowComponent', () => {
         });
     });
     */
+
+    describe('When clicking on ticket', () => {
+        it('Then navigation should be triggered with url detail/0', async () => {
+
+            // Without this test, the detail component is missing from the code coverage report
+
+            // this navigate button wrapper caused some of my previous test attempts to fail
+            // Skipping this test til later did affect my recognition of some other test failures
+
+            const mockAssign = jest.fn();
+            const mockCloseTicket = jest.fn();
+
+            const user = userEvent.setup();
+
+            await render(RowComponent, {
+                routes: APP_ROUTES,
+                componentInputs: {
+                    ticket: TICKET_NOT_ASSIGNED, // id is 0 & using TICKET_ASSIGNED, id is 1
+                    users: USERS
+                },
+                componentOutputs: {
+                    assign: {
+                        emit: mockAssign
+                    } as any,
+                    closeTicket: {
+                        emit: mockCloseTicket
+                    } as any
+                }
+            });
+
+            const location = TestBed.inject(Location);
+            const rowButton = screen.getAllByRole('button')[0];
+
+            await user.click(rowButton);
+            expect(location.path()).toEqual('/detail/0');
+        });
+    });
 
 });

@@ -94,7 +94,7 @@ export class TicketStore
 
   // need to remove both ngrx methods
   // use super to set initialState 
-  // use ngOnInit to loadTickets and loadUsers
+  // use ngOnInit to call loadTickets and loadUsers or add the calls to the constructor ?
   */
 
   ngrxOnStoreInit() {

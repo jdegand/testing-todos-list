@@ -12,6 +12,7 @@ const USERS = [
   { id: 1, name: 'titi' },
   { id: 2, name: 'george' },
 ];
+
 const TICKETS = [
   {
     id: 0,
@@ -27,14 +28,17 @@ const TICKETS = [
   },
 ];
 
-// TicketStore coverage is already good from list tests
-// backend service needs tests - will these tests improve code coverage? No.
+// TicketStore coverage is already good from list tests.  (I did the list tests before the store tests)  
+// Will these tests improve code coverage? No.
 // Added Thomas' tests and only line 50 of Ticket Store gets covered from all these tests
-// Wasted work?
+// Wasted work?  
+// In a real project, it would be better to prioritize Backend Service tests first instead of extra tests of the store.
 describe('TicketStore', () => {
 
   describe('When init', () => {
     it('Then calls backend.users and backend.tickets', async () => {
+      // better to combine or have separate tests for each ?
+
       const {mockBackendService} = await setup();
 
       expect(mockBackendService.users).toHaveBeenCalled();
@@ -49,7 +53,12 @@ describe('TicketStore', () => {
 
     describe('Given users api returns failure response', () => {
       it('Then tickets should not have any assignee', () => {
-        //
+        // I think this is the test that will help with line 50
+
+        // Not really sure how I would test this as Thomas' solution has a more involved setup function
+
+        // mockBackendService.users.and.returnValue(of(throwError()=> new Error("Blah blah blah"))) or something close
+        // then check tickets are the same as TICKETS
       });
     });
 

@@ -64,6 +64,7 @@ describe('AddComponent', () => {
                 expect(errorMsg).toBeVisible();   
                 
                 // the strong tag prevents use of getByText
+                // byRole is excellent for getting around nested tag problems 
                 // could use byRole and make error message a heading tag but  
                 // you can't use any tags other than span to wrap the element without breaking styling
                 // tried to use a function in a getByText query but ran into typescript issues
@@ -72,5 +73,4 @@ describe('AddComponent', () => {
             });
         });
     });
-
 });

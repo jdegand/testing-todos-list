@@ -1,10 +1,13 @@
-import { render, screen, within } from '@testing-library/angular';
+import { render, screen, waitFor, within } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
 import { of, throwError } from 'rxjs';
 import { BackendService } from '../backend.service';
 import { ListComponent } from './list.component';
 import { createMockWithValues } from '@testing-library/angular/jest-utils';
 import { APP_ROUTES } from '../app.route';
+import { TestBed } from '@angular/core/testing';
+import { Location } from '@angular/common';
+import { Router } from '@angular/router';
 
 const USERS = [
     { id: 1, name: 'titi' },
@@ -27,7 +30,7 @@ const TICKETS = [
 ];
 
 // these tests help ticket store coverage
-// ListComponent was 100% before any tests were written
+// ListComponent has 100% coverage before any tests are written
 describe('ListComponent', () => {
 
     describe('Given Install inside the search input', () => {
@@ -127,15 +130,17 @@ describe('ListComponent', () => {
                 // const combobox = screen.getByRole("combobox"); you can't grab the combobox
                 // Need to use async or get component to render again so the DOM is totally populated before querying
 
-                // I used fixture.detectChanges() -> accustomed to using from karma and jasmine
-                // could also try waitFor or waitForAsync
-                // Looked at Thomas' solution he awaited some screen queries - I didn't know you can do that
-                // I always use the other ways to deal with async issues
+                // I used fixture.detectChanges() -> accustomed to using that from karma and jasmine
 
-                // Added testIds -> I feel like this could be a case where they are beneficial
-                // Any added list item -> you always have a selector and just have to update indexes
-                // And you aren't really bloating the code or making unmaintainable 
-                // the row component is being repeated and the selector would only be changed inside it
+                // Looked at Thomas' solution he awaited some screen queries - I don't think that is correct
+                // You should use waitFor or waitForAsync to wrap the synchronous queries
+
+                // Thomas' solution used within to look inside the rows -> within is good for lists
+
+                // I added testIds -> I feel like this could be a case where they are beneficial
+                // Performance-wise better than using within ? Absolutely.  2x - 4x quicker.
+
+                // I feel like this code is a little easier to understand at first glance as well 
 
                 fixture.detectChanges();
 
@@ -147,6 +152,48 @@ describe('ListComponent', () => {
                 expect(assigneeDiv.textContent).toContain("george");
             });
         });
+
+        /*
+        // Thomas's test -> using within
+        // maybe save within(rows[0]) to a variable
+        // still doesn't help performance -> within is not performant
+
+        describe('Thomas solution- When assigning first ticket to george', () => {
+            describe('Given a success answer from API', () => {
+                it('Then first ticket is assigned to George', async () => {
+                    //
+                    const { mockBackendService } = await setup();
+                    const user = userEvent.setup();
+
+                    mockBackendService.assign.mockImplementation((ticketId, userId) =>
+                        of({
+                            ...TICKETS[0],
+                            id: ticketId,
+                            assigneeId: userId,
+                        })
+                    );
+
+                    let rows = await screen.findAllByRole('listitem');
+
+                    const savedWithin = within(rows[0]);
+
+                    const assignSelect = savedWithin.getByRole('combobox', {
+                        name: /assign to/i,
+                    });
+
+                    await user.click(assignSelect);
+                    await user.click(screen.getByText(/george/i));
+
+                    await user.click(
+                        savedWithin.getByRole('button', { name: /^assign$/i })
+                    );
+
+                    rows = await screen.findAllByRole('listitem');
+                    savedWithin.getByText(/george/i);
+                });
+            })
+        })
+        */
 
         describe('Given a failure answer from API', () => {
             it('Then an error is displayed at the bottom of the list', async () => {
@@ -165,10 +212,10 @@ describe('ListComponent', () => {
                 const assigneeDiv = screen.getAllByTestId("assigneeDiv")[0];
                 expect(assigneeDiv.textContent).toContain("titi"); // original value
 
-                // By using a random string that you know is unlikely to naturally appear in the document,
+                // By using a random string that you know that is unlikely to naturally appear in the document,
                 // you don't have to be precise with your selector
                 // however, using screen.getByText is less performant as it scans the whole document
-                // So if you many tests or tests that need to be done often this would need to be changed
+                // So if you have many tests or tests that need to be done often, this would need to be refined
                 expect(screen.getByText("qwertyqwertyqwerty")).toBeInTheDocument();
             });
         });
@@ -215,7 +262,7 @@ describe('ListComponent', () => {
                 await user.click(button);
 
                 expect(screen.getAllByTestId("doneDiv")[0].textContent).toContain("false");
-                
+
                 expect(screen.getByText("qwertyqwertyqwerty")).toBeInTheDocument();
             });
         });
@@ -223,7 +270,41 @@ describe('ListComponent', () => {
 
     describe('When clicking on first ticket', () => {
         it('Then we navigate to detail/0', async () => {
-            //
+            await setup();
+
+            const user = userEvent.setup();
+
+            const location = TestBed.inject(Location);
+            const rowButton = screen.getAllByRole('button')[0];
+
+            await user.click(rowButton);
+
+            waitFor(() => {
+                expect(location.path()).toEqual('/detail/0');
+            })
+        });
+    });
+
+    describe('When clicking on first ticket', () => {
+        it('Then we navigate to detail/0 with router spy', async () => {
+
+            // this test is slightly slower than previous test
+
+            await setup();
+
+            const user = userEvent.setup();
+
+            const route = TestBed.inject(Router);
+
+            const navigateSpy = jest.spyOn(route, 'navigate');
+
+            const rowButton = screen.getAllByRole('button')[0];
+
+            await user.click(rowButton);
+
+            waitFor(() => {
+                expect(navigateSpy).toHaveBeenCalledWith('/detail/0');
+            })
         });
     });
 
@@ -236,15 +317,13 @@ describe('ListComponent', () => {
 // throughout the video, they disregard typing  
 // key takeaway from video -> just use objects to convert from jasmine to jest
 
-/*
-const mockBackendService = {
-    users: jest.fn(),
-    tickets: jest.fn(),
-    newTicket: jest.fn(),
-    assign: jest.fn(),
-    complete: jest.fn()
-}
-*/
+//const mockBackendService = {
+//    users: jest.fn(),
+//    tickets: jest.fn(),
+//    newTicket: jest.fn(),
+//    assign: jest.fn(),
+//    complete: jest.fn()
+//}
 
 // could add userEvent to setup but I already had that in many tests
 const setup = async () => {
@@ -267,7 +346,6 @@ const setup = async () => {
 
     return { fixture, mockBackendService };
 };
-
 
 /*
 describe('ListComponent', () => {
