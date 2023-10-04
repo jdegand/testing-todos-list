@@ -134,6 +134,7 @@ describe('ListComponent', () => {
 
                 // Looked at Thomas' solution he awaited some screen queries - I don't think that is correct
                 // You should use waitFor or waitForAsync to wrap the synchronous queries
+                // No it is fine.  I confused getBy which is sync with findBy which is async.
 
                 // Thomas' solution used within to look inside the rows -> within is good for lists
 

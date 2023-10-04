@@ -20,8 +20,7 @@ You can also do it with cypress.
 
 ## Screenshots
 
-
-### Inital Code Coverage
+### Initial Code Coverage
 ![](screenshots/testing-todos-list-initial-results.png "Initial Code Coverage")
 
 ***
