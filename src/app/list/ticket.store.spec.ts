@@ -39,7 +39,7 @@ describe('TicketStore', () => {
     it('Then calls backend.users and backend.tickets', async () => {
       // better to combine or have separate tests for each ?
 
-      const {mockBackendService} = await setup();
+      const { mockBackendService } = await setup();
 
       mockBackendService.users.mockReturnValue(of(USERS));
       mockBackendService.tickets.mockReturnValue(of(TICKETS));
@@ -56,11 +56,11 @@ describe('TicketStore', () => {
 
     describe('Given users api returns failure response', () => {
 
-      it('Then tickets should not have any assignee',  async() => {
+      it('Then tickets should not have any assignee', async () => {
         // This is the test that will help with line 50 of ticket.store
         // increases branch coverage
 
-        const {mockBackendService, store} = await setup();
+        const { mockBackendService, store } = await setup();
 
         // already have store in the setup function 
         // however, you could delete that and just use fixture

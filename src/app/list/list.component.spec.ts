@@ -36,9 +36,7 @@ describe('ListComponent', () => {
     describe('Given Install inside the search input', () => {
         it('Then one row is visible', async () => {
 
-            await setup();
-
-            const user = userEvent.setup();
+            const { user } = await setup();
 
             const input = screen.getByLabelText("Search");
 
@@ -54,9 +52,7 @@ describe('ListComponent', () => {
     describe('When typing a description and clicking on add a new ticket', () => {
         describe('Given a success answer from API', () => {
             it('Then ticket with the description is added to the list with unassigned status', async () => {
-                const { mockBackendService } = await setup();
-
-                const user = userEvent.setup();
+                const { mockBackendService, user } = await setup();
 
                 mockBackendService.newTicket.mockReturnValue(of({
                     id: 3,
@@ -93,9 +89,7 @@ describe('ListComponent', () => {
 
         describe('Given a failure answer from API', () => {
             it('Then an error is displayed at the bottom of the list', async () => {
-                const { mockBackendService } = await setup();
-
-                const user = userEvent.setup();
+                const { mockBackendService, user } = await setup();
 
                 // error is unknown and doesn't have a defined shape
                 mockBackendService.newTicket.mockReturnValue(throwError(() => "795fsnfksdnfjsndf"))
@@ -116,9 +110,7 @@ describe('ListComponent', () => {
     describe('When assigning first ticket to george', () => {
         describe('Given a success answer from API', () => {
             it('Then first ticket is assigned to george', async () => {
-                const { mockBackendService, fixture } = await setup();
-
-                const user = userEvent.setup();
+                const { mockBackendService, fixture, user } = await setup();
 
                 mockBackendService.assign.mockReturnValue(of({
                     id: 0,
@@ -197,9 +189,7 @@ describe('ListComponent', () => {
 
         describe('Given a failure answer from API', () => {
             it('Then an error is displayed at the bottom of the list', async () => {
-                const { mockBackendService, fixture } = await setup();
-
-                const user = userEvent.setup();
+                const { mockBackendService, fixture, user } = await setup();
 
                 mockBackendService.assign.mockReturnValue(of(throwError(() => "qwertyqwertyqwerty")));
 
@@ -224,9 +214,7 @@ describe('ListComponent', () => {
     describe('When finishing first ticket', () => {
         describe('Given a success answer from API', () => {
             it('Then first ticket is done', async () => {
-                const { mockBackendService, fixture } = await setup();
-
-                const user = userEvent.setup();
+                const { mockBackendService, fixture, user } = await setup();
 
                 // {...TICKETS[0], completed: true}
                 mockBackendService.complete.mockReturnValue(of({
@@ -249,9 +237,7 @@ describe('ListComponent', () => {
         describe('Given a failure answer from API', () => {
             it('Then an error is displayed at the bottom of the list', async () => {
 
-                const { mockBackendService, fixture } = await setup();
-
-                const user = userEvent.setup();
+                const { mockBackendService, fixture, user } = await setup();
 
                 mockBackendService.complete.mockReturnValue(of(throwError(() => "qwertyqwertyqwerty")));
 
@@ -270,9 +256,7 @@ describe('ListComponent', () => {
 
     describe('When clicking on first ticket', () => {
         it('Then we navigate to detail/0', async () => {
-            await setup();
-
-            const user = userEvent.setup();
+            const { user } = await setup();
 
             const location = TestBed.inject(Location);
             const rowButton = screen.getAllByRole('button')[0];
@@ -290,9 +274,7 @@ describe('ListComponent', () => {
 
             // this test is slightly slower than previous test
 
-            await setup();
-
-            const user = userEvent.setup();
+            const { user } = await setup();
 
             const route = TestBed.inject(Router);
 
@@ -325,7 +307,6 @@ describe('ListComponent', () => {
 //    complete: jest.fn()
 //}
 
-// could add userEvent to setup but I already had that in many tests
 const setup = async () => {
 
     const mockBackendService = createMockWithValues(BackendService, {
@@ -344,7 +325,9 @@ const setup = async () => {
         providers: [{ provide: BackendService, useValue: mockBackendService }],
     });
 
-    return { fixture, mockBackendService };
+    const user = userEvent.setup();
+
+    return { fixture, mockBackendService, user };
 };
 
 /*
