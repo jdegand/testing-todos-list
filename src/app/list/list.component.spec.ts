@@ -216,7 +216,7 @@ describe('ListComponent', () => {
                 // you don't have to be precise with your selector
                 // however, using screen.getByText is less performant as it scans the whole document
                 // So if you have many tests or tests that need to be done often, this would need to be refined
-                expect(screen.getByText("qwertyqwertyqwerty")).toBeInTheDocument();
+                screen.getByText("qwertyqwertyqwerty");
             });
         });
     });
@@ -263,7 +263,7 @@ describe('ListComponent', () => {
 
                 expect(screen.getAllByTestId("doneDiv")[0].textContent).toContain("false");
 
-                expect(screen.getByText("qwertyqwertyqwerty")).toBeInTheDocument();
+                screen.getByText("qwertyqwertyqwerty");
             });
         });
     });
