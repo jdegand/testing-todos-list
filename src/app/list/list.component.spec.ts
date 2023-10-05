@@ -115,7 +115,7 @@ describe('ListComponent', () => {
 
     describe('When assigning first ticket to george', () => {
         describe('Given a success answer from API', () => {
-            it('Then first ticket is assigned to george', async () => { // george is not capitalized
+            it('Then first ticket is assigned to george', async () => {
                 const { mockBackendService, fixture } = await setup();
 
                 const user = userEvent.setup();
@@ -132,9 +132,8 @@ describe('ListComponent', () => {
 
                 // I used fixture.detectChanges() -> accustomed to using that from karma and jasmine
 
-                // Looked at Thomas' solution he awaited some screen queries - I don't think that is correct
-                // You should use waitFor or waitForAsync to wrap the synchronous queries
-                // No it is fine.  I confused getBy which is sync with findBy which is async.
+                // Looked at Thomas' solution he awaited some screen queries
+                // You can use also waitFor or waitForAsync to wrap the queries.  
 
                 // Thomas' solution used within to look inside the rows -> within is good for lists
 

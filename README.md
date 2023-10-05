@@ -49,13 +49,13 @@ You can also do it with cypress.
 - I replicated Input / Output testing for the add component as well.   
 - "Incorrect use of <label for=FORM_ELEMENT>" error with the assign select input.  This seems to be a recurring problem with Angular Material. I have to investigate further to see what the issue is.  The error doesn't seem to really affect the performance of the app. I ignored it.
 - I need to look into the differences between using router and location in testing.  Mocking Router seems to be a slower solution that just using location and location.path().
-- Once you start adding testids, it is tempting to keep adding more.  Testids really do speed up the testing process. 
+- Once you start adding testids, it is tempting to keep adding more.  
+- Testids really do speed up the testing process.
+- Surprisingly, testids can help reduce the time your tests take.  In this app, using `within` slows down tests by 2x - 4x.   
 
 ## Continued Development
 
-- ticket store tests
-- change tests that depend on using testid
-- Angular Material error
+- Angular Material error with labels
 
 ## How to Use
 

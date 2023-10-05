@@ -65,9 +65,9 @@ describe('TicketStore', () => {
         // already have store in the setup function 
         // however, you could delete that and just use fixture
 
-        //const store = fixture.debugElement.injector.get(TicketStore); 
+        // const store = fixture.debugElement.injector.get(TicketStore); 
 
-        // had to change my setup function since it was always mocked with user and tickets
+        // had to change my setup function since it was always mocked with users and tickets
         // each test would need mockBackendService.users & mockBackendService.tickets to be set manually
 
         mockBackendService.users.mockReturnValue(
@@ -78,7 +78,7 @@ describe('TicketStore', () => {
           of(TICKETS)
         );
 
-        // has async issues because of awaiting the setup so can't add done to the async function
+        // has async issues because of awaiting the setup so can't add `done` to the subscribe function
         store.tickets$.pipe(take(1)).subscribe((tickets) => {
           expect(tickets[0]).toEqual({
             id: 0,
