@@ -52,6 +52,8 @@ You can also do it with cypress.
 - Once you start adding testids, it is tempting to keep adding more.  
 - Testids really do speed up the testing process.
 - Surprisingly, testids can help reduce the time your tests take.  In this app, using `within` slows down tests by 2x - 4x.   
+- Jest doesn't allow done callbacks to be used with async functions anymore. lastValueFrom is a great alternative.  You wrap the observable's subscribe call with a pipe to get a value that you can test against.  
+- Ticket.store.spec tests were problematic to get right.  I had a test that passed that I don't believe is correct.  I have changed it and made more notes in the file. The problems stem from the fact that the setup function is not flexible enough to handle different values for users and tickets.
 
 ## Continued Development
 
@@ -124,3 +126,5 @@ npm run test:coverage
 - [Blog](https://blog.angular.io/write-better-tests-without-router-mocks-stubs-bf5fc95c1c57) - write better tests without router mocks stubs
 - [Dev.to](https://dev.to/this-is-angular/testing-angular-routing-components-with-the-routertestingmodule-4cj0) - testing angular components with the routerTestingModule
 - [Dev.to](https://dev.to/tipsy_dev/testing-library-writing-better-async-tests-c67) - testing library writing better async tests
+- [Stack Overflow](https://stackoverflow.com/questions/70884240/test-functions-cannot-both-take-a-done-callback) - test functions cannot both take a done callback and be inside an async function
+- [Medium](https://medium.com/@alariclg/how-to-simply-test-observable-asynchronous-subscription-in-angular-dd278447e93) - test observable async subscription
