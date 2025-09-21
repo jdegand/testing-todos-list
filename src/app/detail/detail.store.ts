@@ -36,7 +36,7 @@ export class DetailStore
     loading: this.loading$,
   });
 
-  constructor(private backend: BackendService, private route: ActivatedRoute) {
+  constructor(private readonly backend: BackendService, private readonly route: ActivatedRoute) {
     super(initialState);
   }
 

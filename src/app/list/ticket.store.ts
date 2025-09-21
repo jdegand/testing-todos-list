@@ -85,7 +85,7 @@ export class TicketStore
     search,
   }));
 
-  private backend = inject(BackendService);
+  private readonly backend = inject(BackendService);
 
   /*
   constructor(private backend: BackendService) {

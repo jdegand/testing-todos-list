@@ -48,10 +48,10 @@ export class BackendService {
 
   lastId = 1;
 
-  private findTicketById = (id: number) =>
+  private readonly findTicketById = (id: number) =>
     this.storedTickets.find((ticket) => ticket.id === +id);
 
-  private findUserById = (id: number) =>
+  private readonly findUserById = (id: number) =>
     this.storedUsers.find((user) => user.id === +id);
 
   tickets() {
